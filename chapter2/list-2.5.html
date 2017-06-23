@@ -1,0 +1,59 @@
+<html>
+
+<head>
+    <title>Test Suite</title>
+    <script>
+        (x => {
+            let results;
+            x.assert = (value, desc) => {
+                let li = document.createElement('li');
+                li.appendChild(document.createTextNode(desc));
+                results.appendChild(li);
+                if (!value) {
+                    li.parentNode.parentNode.className = "fail";
+                } 
+                return li;
+            };
+            x.test = (name, fn) => {
+                results = document.getElementById('results');
+                results = assert(true, name).appendChild(document.createElement('ul'));
+                fn();
+            }
+        })(window);
+
+        window.onload = () => {
+
+            test("A Test", () => {
+                assert(true, "First test completed.");
+                assert(true, "Second test completed.");
+                assert(true, "Third test completed.");
+            });
+
+            test("Another Test", () => {
+                assert(true, "First test completed.");
+                assert(false, "Second test failed.");
+                assert(true, "Third test failed.");
+            });
+
+            test("A Third Test", () => {
+                assert(null, "failed.");
+                assert(5, "pass.");
+            });
+        };
+    </script>
+    <style>
+        #results li.pass {
+            color: green;
+        }
+
+        #results li.fail {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="results"></ul>
+</body>
+
+</html>
