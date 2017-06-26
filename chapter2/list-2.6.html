@@ -1,0 +1,82 @@
+<html>
+
+<head>
+    <title>Test Suite</title>
+    <script>
+        (x => {
+            let queue = [];
+            let paused = false;
+            let results;
+
+            x.assert = (value, desc) => {
+                let li = document.createElement('li');
+                li.appendChild(document.createTextNode(desc));
+                results.appendChild(li);
+                if (!value) {
+                    li.parentNode.parentNode.className = "fail";
+                }
+                return li;
+            };
+
+            x.test = (name, fn) => {
+                queue.push(() => {
+                    results = document.getElementById('results');
+                    results = assert(true, name).appendChild(document.createElement('ul'));
+                    fn();
+                });
+
+                runTest();
+            }
+
+            this.pause = () => { paused = true; }
+
+            this.resume = function () {
+                paused = false;
+                setTimeout(runTest, 1);
+            }
+
+            function runTest() {
+                if (!paused && queue.length) {
+                    queue.shift()();
+                    if (!paused) {
+                        resume();
+                    }
+                }
+            }
+        })(window);
+
+        window.onload = () => {
+
+            test("Async Test #1", () => {
+                pause();
+                setTimeout(() => {
+                    assert(true, "First test completed.");
+                    resume();
+                }, 1000);
+            });
+
+            test("Async Test #2", () => {
+                pause();
+                setTimeout(() => {
+                    assert(true, "Second test completed.");
+                    resume();
+                }, 1000);
+            });
+        };
+    </script>
+    <style>
+        #results li.pass {
+            color: green;
+        }
+
+        #results li.fail {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="results"></ul>
+</body>
+
+</html>

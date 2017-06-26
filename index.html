@@ -1,10 +1,38 @@
 <html>
+
 <head>
     <title>Test Suite</title>
     <script>
+        let array = [1,3, 21, 7, 9, 0, -1, 11, -10];
+
+        function t(array) {
+            if (!array instanceof Array) {
+                console.log("not array");
+                return;
+            }
+            let length = array.length;
+            let sum = 1;
+            if (array.length <= 3) {
+                for (let i = 0; i < length; i++) {
+                    sum = sum * array[i];
+                }
+            } else {
+                array.sort((a, b) =>  b - a );
+                console.log(array);
+                let end = length - 1;
+                for (let i = 0; i < 3;i++) {
+                    sum = sum * array[i];
+                }
+            }
+            return sum;
+        }
+
+        console.log(t(array));
     </script>
 </head>
+
 <body>
-    
+
 </body>
+
 </html>
