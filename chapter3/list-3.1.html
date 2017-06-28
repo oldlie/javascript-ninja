@@ -33,6 +33,8 @@
         assert(typeof window.canFly === "function", "canFly() defined.");
         console.log("name:", canFly.name); // 这里和书上不一样呢。Chrome / FF 显示名称就是 canFly; IE 显示： undefined
         assert(canFly.name === '', "canFly() has no name.") // Chrome / IE10 / FF 都不通过
+        // 标准已经修改了 ES5 返回空值， ES6 返回实际函数名， 参考：
+        // http://es6.ruanyifeng.com/?search=name&x=0&y=0#docs/function#name-属性
 
         window.isDeadly = function () { return true; }
         assert(typeof window.isDeadly === "function", "isDeadly() defined.");
