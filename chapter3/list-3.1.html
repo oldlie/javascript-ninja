@@ -1,0 +1,56 @@
+<html>
+
+<head>
+    <title>Test Suite</title>
+    <style>
+        #results li.pass {
+            color: green;
+        }
+
+        #results li.fail {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="results"></ul>
+
+    <script>
+        function assert(value, desc) {
+            let li = document.createElement('li');
+            li.className = value ? "pass" : "fail";
+            li.appendChild(document.createTextNode(desc));
+            document.getElementById('results').appendChild(li);
+        }
+
+        function isNimble() { return this; }
+
+        assert(typeof window.isNimble === "function", "isNimble() difined");
+        assert(isNimble.name === "isNimble", "isNimble() has a name"); // IE10 不通过
+
+        var canFly = function () { return true; }
+        assert(typeof window.canFly === "function", "canFly() defined.");
+        console.log("name:", canFly.name); // 这里和书上不一样呢。Chrome / FF 显示名称就是 canFly; IE 显示： undefined
+        assert(canFly.name === '', "canFly() has no name.") // Chrome / IE10 / FF 都不通过
+
+        window.isDeadly = function () { return true; }
+        assert(typeof window.isDeadly === "function", "isDeadly() defined.");
+
+        function outer() {
+
+            assert(typeof inner === "function", "inner() in scope before declaration.");
+            function inner() { };
+            assert(typeof inner === "function", "inner() in scope after declaration.");
+            assert(window.inner === undefined, "inner() not in global scope.");
+        }
+
+        outer();
+
+        assert(window.inner === undefined, "inner() still not in global scope.");
+        window.wieldsSword = function swingsSword() { return true; }
+        assert(window.wieldsSword.name === "swingsSword", "wieldsSword's real name is swingsSword.")
+    </script>
+</body>
+
+</html>
