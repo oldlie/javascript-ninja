@@ -32,14 +32,14 @@
 
         var weapons = ['shuriken', 'katana', 'nunchuncks'];
 
-        forEach(weapons, function(index) {
+        forEach(weapons, function (index) {
             console.log(this);
             console.log(weapons[index]);
 
             // 这里在 chrome/FF 中 this 是一个String对象
-            assert(this === weapons[index], `Got the expected value of ${weapons[index]}` ); 
-
-            assert(this.toString() === weapons[index], `Got the expected value of ${weapons[index]}` );
+            assert(this === weapons[index], `Got the expected value of ${weapons[index]}`);
+            assert(this == weapons[index], `Got the expected value of ${weapons[index]}`);
+            assert(this.toString() === weapons[index], `Got the expected value of ${weapons[index]}`);
         });
     </script>
 </body>
