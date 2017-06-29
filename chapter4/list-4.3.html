@@ -1,0 +1,37 @@
+<html>
+
+<head>
+    <title>Test Suite</title>
+    <style>
+        #results li.pass {
+            color: green;
+        }
+
+        #results li.fail {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="results"></ul>
+
+    <script>
+        function assert(value, desc) {
+            let li = document.createElement('li');
+            li.className = value ? "pass" : "fail";
+            li.appendChild(document.createTextNode(desc));
+            document.getElementById('results').appendChild(li);
+        }
+
+        var ninja = {
+            chirp: function (n) {
+                return n > 1 ? ninja.chirp(n - 1) + "-chirp" : "chirp";
+            }
+        }
+
+        assert(ninja.chirp(3) === "chirp-chirp-chirp", "An object property is not too confusing, either.");
+    </script>
+</body>
+
+</html>
