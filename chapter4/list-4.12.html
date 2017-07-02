@@ -1,0 +1,43 @@
+<html>
+
+<head>
+    <title>Test Suite</title>
+    <style>
+        #results li.pass {
+            color: green;
+        }
+
+        #results li.fail {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="results"></ul>
+
+    <script>
+        function assert(value, desc) {
+            let li = document.createElement('li');
+            li.className = value ? "pass" : "fail";
+            li.appendChild(document.createTextNode(desc));
+            document.getElementById('results').appendChild(li);
+        }
+
+        function merge(root) {
+            for (var i = 1; i <arguments.length; i++) {
+                for (var key in arguments[i]) {
+                    root[key] =arguments[i][key];
+                }
+            }
+            return root;
+        }
+
+        var merged = merge({name: "Batou"}, {"city": "Niihama"});
+
+        assert(merged.name == "Batou", "The original name is intact.");
+        assert(merged.city == "Niihama", "And the city has been copied over.")
+    </script>
+</body>
+
+</html>
