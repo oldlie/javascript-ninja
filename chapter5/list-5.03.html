@@ -1,0 +1,56 @@
+<html>
+
+<head>
+    <title>Test Suite</title>
+    <style>
+        #results li.pass {
+            color: green;
+        }
+
+        #results li.fail {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="results"></ul>
+
+    <script>
+        function assert(value, desc) {
+            let li = document.createElement('li');
+            li.className = value ? "pass" : "fail";
+            li.appendChild(document.createTextNode(desc));
+            document.getElementById('results').appendChild(li);
+        }
+
+        var outerValue = "ninja";
+        var later;
+
+        function outerFunction() {
+            var innerValue = `samurai`;
+
+            function innerFunction(paramValue) {
+                assert(outerValue, "I can see the ninja.");
+                assert(innerValue, "I can see the samurai.")
+                assert(paramValue, "Inner can see the wakizashi.");
+                assert(tooLate, "Inner can see the ronin");
+            }
+
+            later = innerFunction;
+        }
+
+        assert(!tooLate, "Outer can not see ronin.");
+
+        var tooLate = "ronin";
+
+        outerFunction();
+
+        // 内部函数的参数包含在作用域内
+        // 作用域之外的所有变量，即便是函数声明之后的那些变量，也都包含在闭包中
+        // 相同的作用域内，尚未声明的变量不能进行提前引用
+        later("wakizashi");
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<html>
+
+<head>
+    <title>Test Suite</title>
+    <style>
+        #results li.pass {
+            color: green;
+        }
+
+        #results li.fail {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="results"></ul>
+
+    <script>
+        function assert(value, desc) {
+            let li = document.createElement('li');
+            li.className = value ? "pass" : "fail";
+            li.appendChild(document.createTextNode(desc));
+            document.getElementById('results').appendChild(li);
+        }
+
+        var outerValue = "ninja";
+        var later;
+
+        function outerFunction() {
+            var innerValue = `samurai`;
+
+            function innerFunction() {
+                assert(outerValue, "I can see the ninja.");
+                assert(innerValue, "I can see the samurai.")
+            }
+
+            later = innerFunction;
+        }
+
+        outerFunction();
+
+        // 只要 later 在， innerFunction 的引用就在，
+        // innerFunction 引用的 outerValue 和 innerValue 也都因此得以保存
+        // 此时，以 innerFunction 作用域形成了闭包的概念。
+        // 即 innerFunction 维持了其作用域内的变量不被回收。
+        // 其实简单说就是 innerFunction 作用域内的变量没有丢失引用。
+        // 
+        // JavascriptNinja: 像保护气泡一样，只要innerFunction()函数一直存在，它的闭包就保持该作用域中即将被垃圾回收的变量
+        later();
+    </script>
+</body>
+
+</html>
