@@ -1,0 +1,54 @@
+<html>
+
+<head>
+    <title>Test Suite</title>
+    <style>
+        #results li.pass {
+            color: green;
+        }
+
+        #results li.fail {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="results"></ul>
+
+    <script>
+        function assert(value, desc) {
+            let li = document.createElement('li');
+            li.className = value ? "pass" : "fail";
+            li.appendChild(document.createTextNode(desc));
+            document.getElementById('results').appendChild(li);
+        }
+
+        Function.prototype.partial = function () {
+            var fn = this,
+                args = Array.prototype.slice.call(arguments);
+
+            return function() {
+                var arg = 0;
+                for (var i = 0; i <args.length && i <arguments.length; i++) {
+                    if (args[i] == undefined) {
+                        args[i] = arguments[arg++];
+                    }
+                }
+                console.log(`partial closur:${fn.name}`);
+                console.log(`partial closur:${this.name}`);
+                console.log(`partial closur:${args}`);
+                return fn.apply(this, args);
+            };
+        };
+
+        String.prototype.csv = String.prototype.split.partial(/,\s*/);
+        var results = ("Mugan, Jin, Fuu").csv();
+        assert(results[0] == "Mugan" &&
+            results[1] == "Jin" &&
+            results[2] == "Fuu",
+            "The text values were split property");
+    </script>
+</body>
+
+</html>

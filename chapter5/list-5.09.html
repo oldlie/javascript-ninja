@@ -1,0 +1,57 @@
+<html>
+
+<head>
+    <title>Test Suite</title>
+    <style>
+        #results li.pass {
+            color: green;
+        }
+
+        #results li.fail {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="results"></ul>
+
+    <script>
+        function assert(value, desc) {
+            let li = document.createElement('li');
+            li.className = value ? "pass" : "fail";
+            li.appendChild(document.createTextNode(desc));
+            document.getElementById('results').appendChild(li);
+        }
+
+        Function.prototype.bind = function () {
+            var fn = this,
+                args = Array.prototype.slice.call(arguments), // 将参数伪数组转换为数组
+                object = args.shift(); // 第一个参数
+
+            console.log(`bind fn: ${fn.name}`);
+            console.log(`bind object: ${object.name}`);
+
+            return function () {
+                // 将 fn 的上下文 this 修改为 object
+                // 针对这个例子，即将 myFunction 的 上下文this 修改为 myObject。
+                return fn.apply(object, args.concat(Array.prototype.slice.call(arguments)));
+            };
+        };
+
+        var myObject = {
+            name: "myObject"
+        };
+
+        function myFunction() {
+            return this == myObject;
+        };
+
+        assert(!myFunction(), "Context is not set yet.");
+
+        var aFunction = myFunction.bind(myObject);
+        assert(aFunction(), "Context is set property.");
+    </script>
+</body>
+
+</html>
