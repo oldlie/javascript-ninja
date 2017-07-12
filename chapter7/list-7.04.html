@@ -1,0 +1,46 @@
+<html>
+
+<head>
+    <title>Test Suite</title>
+    <style>
+        #results li.pass {
+            color: green;
+        }
+
+        #results li.fail {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="opacity" style="opacity:0.5;filter:alpha(opacity=50);"></div>
+
+    <ul id="results"></ul>
+
+    <script type="text/javascript">
+        function assert(value, desc) {
+            let li = document.createElement('li');
+            li.className = value ? "pass" : "fail";
+            li.appendChild(document.createTextNode(desc));
+            document.getElementById('results').appendChild(li);
+        };
+
+        var reg = /opacity=([^)])+/;
+        console.log(reg.toString());
+
+        function getOpacity(elem) {
+            var filter = elem.style.filter;
+            return filter ? filter.indexOf("opacity=") >= 0 ?
+                (parseFloat(filter.match(/opacity=([^)])+/)[1]) / 100) + "" : "" : elem.style.opacity;
+        };
+
+        window.onload = function () {
+            assert(getOpacity(document.getElementById("opacity")) == "0.5",
+                "The opacity of the element has been obtained.");
+        };
+    </script>
+</body>
+
+</html>
