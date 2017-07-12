@@ -13,3 +13,5 @@ var name = 'Rukia';
 var user = User('Ichigo',  'Kurosaki');
 
 assert(name == 'Rukia', 'Name was set to Rukia');
+assert(user instanceof User, "User instantiated");
+assert(user.name == "Ichigo Kurosaki", "User name correctly assgined.");

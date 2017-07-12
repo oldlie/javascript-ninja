@@ -1,0 +1,56 @@
+<html>
+
+<head>
+    <title>Test Suite</title>
+    <style>
+        #results li.pass {
+            color: green;
+        }
+
+        #results li.fail {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="results"></ul>
+
+    <script type="text/javascript">
+        function assert(value, desc) {
+            let li = document.createElement('li');
+            li.className = value ? "pass" : "fail";
+            li.appendChild(document.createTextNode(desc));
+            document.getElementById('results').appendChild(li);
+        }
+
+        function isThisAZipCode(candidate) {
+            if (typeof candidate !== "string" || candidate.length != 10) {
+                return false;
+            }
+
+            for (var n = 0; n <candidate.length; n++) {
+                var c = candidate[n];
+                switch(n) {
+                    case 0: case 1: case 2: case 3: case 4:
+                    case 6: case 7: case 8: case 9:
+                        if (c > '9' || c < '0'){
+                            return false;
+                        }
+                        break;
+                    case 5:
+                        if (c != '-') {
+                            return false;
+                        }
+                        break;
+                }
+            }
+            
+            return true;
+        };
+
+        assert( isThisAZipCode ('99999-9999'), "This is a zip code.");
+    </script>
+</body>
+
+</html>

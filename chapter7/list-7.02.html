@@ -23,6 +23,15 @@
             li.appendChild(document.createTextNode(desc));
             document.getElementById('results').appendChild(li);
         };
+
+        var re1 = /test/i;
+        var re2 = new RegExp("test", "i");
+
+        assert(re1.toString() == "/test/i", "Verify the contents of the expression.");
+        assert(re1.test("TesT"), "Yes, it is case-insensitive.");
+        assert(re2.test("Test"), "This one is too.");
+        assert(re1.toString() == re2.toString(), "The regular expressions are equal.");
+        assert(re1 != re2, "But they are different objects.");
     </script>
 </body>
 

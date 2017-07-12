@@ -1,0 +1,55 @@
+<html>
+
+<head>
+    <title>Test Suite</title>
+    <style>
+        #results li.pass {
+            color: green;
+        }
+
+        #results li.fail {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="samurai ninja"></div>
+    <div class="ninja samurai"></div>
+    <div></div>
+
+    <span class="samurai ninja ronin"></span>
+
+    <ul id="results"></ul>
+
+    <script type="text/javascript">
+        function assert(value, desc) {
+            let li = document.createElement('li');
+            li.className = value ? "pass" : "fail";
+            li.appendChild(document.createTextNode(desc));
+            document.getElementById('results').appendChild(li);
+        };
+
+        function findClassInElements(className, type) {
+            var elems = document.getElementsByTagName(type || "*");
+            var regex = new RegExp("(^|\\s)" + className + "(\\s|$)");
+            var results = [];
+            for (var i = 0, length = elems.length; i < length; i++) {
+                if (regex.test(elems[i].className)) {
+                    results.push(elems[i]);
+                }
+            }
+            return results;
+        };
+
+        var ret;
+        ret = findClassInElements("ninja", "div");
+        console.log("div.ninja:", ret);
+        assert(ret.length === 2, "The right amount of the div ninjas was found.");
+        assert(findClassInElements("ninja", "span").length === 1, "The right amount of span ninjas was found.");
+        assert(findClassInElements("ninja").length === 3, "The right amount of ninjas was found.");
+    </script>
+</body>
+
+</html>
