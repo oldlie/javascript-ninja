@@ -1,0 +1,46 @@
+<html>
+
+<head>
+    <title>Test Suite</title>
+    <style>
+        #results li.pass {
+            color: green;
+        }
+
+        #results li.fail {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="results"></ul>
+
+    <script type="text/javascript">
+        function assert(value, desc) {
+            let li = document.createElement('li');
+            li.className = value ? "pass" : "fail";
+            li.appendChild(document.createTextNode(desc));
+            document.getElementById('results').appendChild(li);
+        };
+
+        var html = '<b class="hello">hello</b> <i>world!</i>';
+
+        // \1 表示引用第一个捕获
+        var pattern = /<(\w+)([^>]*)>(.*?)<\/\1>/g;
+
+        var match = pattern.exec(html);
+
+        assert(match[0] == '<b class="hello">hello</b>', "The entire tag, start to finish.");
+        assert(match[1] == 'b', "The tag name.");
+        assert(match[2] == ' class="hello"', "The tag attribute.");
+
+        match = pattern.exec(html);
+        assert(match[0] == '<i>world!</i>', "The entire tag, start to finish.");
+        assert(match[1] == 'i', "The tag name.");
+        assert(match[2] == '', "The tag attribute.");
+        assert(match[3] == 'world!', "The contents of the tag.");
+    </script>
+</body>
+
+</html>

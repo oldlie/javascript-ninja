@@ -1,0 +1,42 @@
+<html>
+
+<head>
+    <title>Test Suite</title>
+    <style>
+        #results li.pass {
+            color: green;
+        }
+
+        #results li.fail {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="results"></ul>
+
+    <script type="text/javascript">
+        function assert(value, desc) {
+            let li = document.createElement('li');
+            li.className = value ? "pass" : "fail";
+            li.appendChild(document.createTextNode(desc));
+            document.getElementById('results').appendChild(li);
+        };
+
+        var html = '<div class="test"><b>Hello</b> <i>world!</i></div>';
+        // 正则中一个小括号括起来的内容就是一个捕获
+        // 小括号有双重作用：分组操作 和 指定捕获
+        var tag = /<(\/?)(\w+)([^>]*?)>/g, match, num = 0;
+
+        while((match = tag.exec(html)) != null) {
+            console.log("match:", match);
+            assert(match.length == 4, "Every match finds each tag and 3 captures.");
+            num++;
+        }
+
+        assert(num == 6, "3 opening and 3 closing tags found.");
+    </script>
+</body>
+
+</html>
