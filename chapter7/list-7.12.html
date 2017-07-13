@@ -1,0 +1,39 @@
+<html>
+
+<head>
+    <title>Test Suite</title>
+    <style>
+        #results li.pass {
+            color: green;
+        }
+
+        #results li.fail {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="results"></ul>
+
+    <script type="text/javascript">
+        function assert(value, desc) {
+            let li = document.createElement('li');
+            li.className = value ? "pass" : "fail";
+            li.appendChild(document.createTextNode(desc));
+            document.getElementById('results').appendChild(li);
+        };
+
+        function trim(str) {
+            return str.replace(/^\s\s*/, "")    
+                .replace(/\s\s*$/, "");
+        }
+
+        var str = trim("   #id div.class ");
+        console.log('str:', str);
+        assert(str == "#id div.class",
+            "Extra whitespace trimmed from a selector string.");
+    </script>
+</body>
+
+</html>
