@@ -1,0 +1,60 @@
+<html>
+
+<head>
+    <title>Test Suite</title>
+    <style>
+        #results li.pass {
+            color: green;
+        }
+
+        #results li.fail {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <table>
+        <tbody></tbody>
+    </table>
+
+    <ul id="results"></ul>
+
+    <script type="text/javascript">
+        function assert(value, desc) {
+            let li = document.createElement('li');
+            li.className = value ? "pass" : "fail";
+            li.appendChild(document.createTextNode(desc));
+            document.getElementById('results').appendChild(li);
+        };
+
+        var tbody = document.getElementsByTagName('tbody')[0];
+        var rowCount = 20000;
+        var divideInto = 4;
+        var chunkSize = rowCount / divideInto;
+        var iteration = 0;
+
+        setTimeout(function generateRows(){
+            var base = (chunkSize) * iteration;
+
+            for (var i = 0; i < chunkSize; i++) {
+                var tr = document.createElement('tr');
+                for (var t = 0; t < 6; t++) {
+                    td  = document.createElement('td');
+                    td.appendChild(document.createTextNode(`${i + base},${t},${iteration}`));
+                    tr.appendChild(td);
+                }
+                tbody.appendChild(tr);
+            }
+
+            iteration++;
+            if (iteration < divideInto) {
+                setTimeout(generateRows, 0);
+            }
+
+        }, 0);
+    </script>
+</body>
+
+</html>

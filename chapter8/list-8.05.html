@@ -1,0 +1,54 @@
+<html>
+
+<head>
+    <title>Test Suite</title>
+    <style>
+        #results li.pass {
+            color: green;
+        }
+
+        #results li.fail {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="results"></ul>
+
+    <script type="text/javascript">
+        function assert(value, desc) {
+            let li = document.createElement('li');
+            li.className = value ? "pass" : "fail";
+            li.appendChild(document.createTextNode(desc));
+            document.getElementById('results').appendChild(li);
+        };
+
+        (function () {
+            var queue = [], paused = false;
+
+            this.test = function (fn) {
+                queue.push(fn);
+                runTest();
+            };
+
+            this.pause = function () {
+                paused = true;
+            };
+
+            this.resume = function () {
+                paused = false;
+                setTimeout(runTest, 1);
+            };
+
+            function runTest() {
+                if (!paused && queue.length) {
+                    queue.shift();
+                    if (!paused) resume();
+                }
+            };
+        })();
+    </script>
+</body>
+
+</html>
