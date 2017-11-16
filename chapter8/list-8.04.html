@@ -14,6 +14,8 @@
 </head>
 
 <body>
+    <div style="position:absolute;" id="box">Hello!</div>
+
     <ul id="results"></ul>
 
     <script type="text/javascript">
@@ -24,7 +26,7 @@
             document.getElementById('results').appendChild(li);
         };
 
-        var timer = {
+        var timers = {
             timerID: 0,
             timers: [],
 
@@ -53,6 +55,18 @@
                 this.timerID = 0;
             }
         };
+
+        var box = document.getElementById('box'), x = 20, y = 20;
+        timers.add(() => {
+            box.style.left = x + 'px';
+            if (++x > 50) return false;
+        });
+        timers.add(() => {
+            box.style.top = y + 'px';
+            y += 2;
+            if (y > 120) return false;
+        });
+        timers.start();
     </script>
 </body>
 
