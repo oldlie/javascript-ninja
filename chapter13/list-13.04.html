@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #results li.pass {
+            color: green;
+        }
+
+        #results li.fail {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="div1" title="title1">1</div>
+    <div id="div2" title="title2">2</div>
+    <div id="div3" title="title3">3</div>
+    <div id="div4" title="title4">4</div>
+    <div id="div5" title="title5">5</div>
+
+    <ul id="results"></ul>
+    
+        <script type="text/javascript">
+            function assert(value, desc) {
+                let li = document.createElement('li');
+                li.className = value ? "pass" : "fail";
+                li.appendChild(document.createTextNode(desc));
+                document.getElementById('results').appendChild(li);
+            };
+
+            (function () {
+                var cache = {};
+                var guidCounter = 1;
+                var expando = "data" + (new Date).getTime(); // cutaion
+
+                this.getData = function (elem) {
+                    var guid = elem[expando];
+                    if (!guid) {
+                        guid = elem[expando] = guidCounter++;
+                        cache[guid] = {};
+                    }
+                    return cache[guid];
+                }
+
+                this.removeData = function (elem) {
+                    var guid = elem[expando];
+                    console.log(guid);
+                    if (!guid) {
+                        return;
+                    }
+                    try {
+                        console.log('delete', guid);
+                        delete elem[guid];
+                    } catch (e) {
+                        console.log('catch', guid);
+                        if (elem.removeAttribute) {
+                            console.log('remove attr', guid);
+                            elem.removeAttribute(expando);
+                        }
+                    }
+                }
+            })();
+
+            var elems = document.getElementsByTagName('div');
+
+            for (let i = 0; i < elems.length; i++) {
+                getData(elems[i]).ninja = elems[i].title;
+            }
+            for (let n = 0; n < elems.length; n++) {
+                assert(getData(elems[n]).ninja === elems[n].title, "Stored data is " + getData(elems[n]).ninja);
+            }
+            for (let n = 0; n < elems.length; n++) {
+                removeData(elems[n]);
+                console.log(elems[n].ninja);
+                assert(getData(elems[n]).ninja === undefined, "Stored data has been destoryed.");
+            }
+        </script>
+</body>
+</html>
